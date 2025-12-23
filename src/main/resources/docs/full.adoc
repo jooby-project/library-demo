@@ -1,0 +1,76 @@
+= 📚 Full Guide
+:source-highlighter: highlightjs
+:highlightjs-theme: monakai
+
+{{ info.description }}
+
+== Base URL
+
+All requests start with: `{{ server(0).url }}/library`.
+
+=== Summary
+
+{{ routes | table(grid="rows") }}
+
+==== Response codes
+
+{{ statusCode({ 200: "Default/Success", 201: "Created", 404: "Not found", 400: "Invalid Request"}) | list }}
+
+{% for tag in tags %}
+== {{ tag.name }}
+
+{{ tag.description }}
+
+{% for route in tag.routes %}
+=== {{ loop.index + 1 }}. {{ route.summary }}
+
+{{ route.description }}
+
+*URL:* `{{ route }}`
+
+{% if route.parameters is not empty %}
+*Parameters:*
+
+{{ route | parameters | table }}
+{% endif %}
+*Example:* `{{ route | path }}`
+
+{% if route.body is not null %}
+*Data Payload (JSON):*
+
+{{ route | request | body | example | json }}
+{% endif %}
+
+Returns a {{ route | response | link }} object.
+
+.Response
+{{ route | response | example | json }}
+
+{% if route.security is not empty %}
+.Required Permissions
+[cols="1,3"]
+|===
+|Type | Scopes
+{% for scheme in route.security %}
+    {% for req in scheme %}
+| *{{ req.key }}* | {{ req.value | join(", ") }}
+    {% endfor %}
+{% endfor %}
+|===
+{% endif -%}
+{% endfor -%}
+{% endfor %}
+
+== 📖 Reference
+
+=== Book Types
+When viewing book details, you will see a `type` field. Here is what those categories mean:
+
+{{schema("Book.type") | table }}
+
+=== Schemas
+{% for schema in schemas %}
+[id="{{ schema.name }}"]
+==== {{ schema.name }}
+{{ schema | table }}
+{% endfor %}

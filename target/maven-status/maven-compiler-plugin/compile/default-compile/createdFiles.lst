@@ -1,0 +1,17 @@
+app/model/Address_.class
+app/model/Book_.class
+app/model/BookType.class
+app/model/_Author.class
+app/model/_Publisher.class
+app/repo/Library_.class
+app/model/Author_.class
+app/model/Author.class
+app/model/Book.class
+app/model/Address.class
+app/model/_Book.class
+app/model/Publisher_.class
+app/api/LibraryApi.class
+app/model/Publisher.class
+app/api/LibraryApi_.class
+app/repo/Library.class
+app/App.class

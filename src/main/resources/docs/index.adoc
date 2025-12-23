@@ -1,0 +1,76 @@
+= 📚 {{info.title}} Guide
+:source-highlighter: highlightjs
+
+{{ info.description }}
+
+{{ tag("Library").description }}
+
+== Base URL
+
+All requests start with: `{{ server(0).url }}/library`
+
+
+== 🔍 Finding & Browsing Books
+{%- set quickSearch= GET("/library/search") -%}
+{%- set paginated  = GET("/library/books") -%}
+{%- set book  = GET("/library/books/{isbn}") -%}
+{%- set addBook  = POST("/library/books") %}
+
+=== 1. {{ quickSearch.summary }}
+
+{{ quickSearch.description }}
+
+*URL:* `{{ quickSearch }}`
+
+*Parameters:*
+{{ quickSearch | parameters(query) | table }}
+*Example:* `{{quickSearch | path(q="Dune") }}`
+
+=== 2. {{ paginated.summary }}
+
+{{ paginated.description }}
+
+*URL:* `{{ paginated }}`
+
+*Parameters:*
+{{ paginated | parameters | table }}
+*Example:* `{{paginated | path(title="The Hobbit", page=1, size=10) }}`
+
+=== 3. {{ book.summary }}
+
+{{ book.description }}
+
+*URL:* `{{ book }}`
+
+*Parameters:*
+
+{{ book | parameters | table }}
+
+*Example:* `{{ book | path(isbn="978-0441172719") }}`
+
+.Book Not Found
+{{ book | response(404) | json }}
+
+== ➕ {{ tag("Inventory").description }}
+
+=== 4. {{ addBook.summary }}
+
+{{ addBook.description }}
+
+*URL:* `{{ addBook }}`
+
+*Data Payload (JSON):*
+
+{{ addBook | request | body | example | json }}
+
+.Bad Request
+{{ addBook | response(400) | json }}
+
+== 📖 Reference: Book Types
+When viewing book details, you will see a `type` field. Here is what those categories mean:
+
+{{schema("Book.type") | table }}
+
+== 📖 Reference: Open API
+
+{{ openapi | yaml }}
