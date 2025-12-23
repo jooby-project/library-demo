@@ -69,7 +69,7 @@ public class App extends Jooby {
     mvc(new LibraryApi_());
 
     onStarted(() -> {
-      log.info("\n\nTry live docs at: \n  http://localhost:8080/docs\n  http://localhost:8080/docs/full.html\n  http://localhost:8080/docs/tryIt.html");
+      log.info("\n\nTry live docs at: \n  http://localhost:8080/docs\n  http://localhost:8080/docs/full.html\n  http://localhost:8080/docs/tryIt.html\n\n  http://localhost:8080/redoc\n  http://localhost:8080/swagger\n");
     });
   }
 
