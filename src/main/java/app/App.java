@@ -19,6 +19,8 @@ import io.jooby.netty.NettyServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.Executors;
+
 /**
  * Library API.
  * <p>
@@ -49,6 +51,9 @@ public class App extends Jooby {
     private static final Logger log = LoggerFactory.getLogger(App.class);
 
     {
+        // Enable Virtual Threads
+        setDefaultWorker(Executors.newVirtualThreadPerTaskExecutor());
+
         // Dependency Injection
         install(new GuiceModule());
 
