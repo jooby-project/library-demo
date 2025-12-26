@@ -23,83 +23,83 @@ import java.util.Optional;
 @ImplementedBy(Library_.class)
 public interface Library {
 
-  /**
-   * A helper to access the database connection directly.
-   * Useful if we need to do something very specific that the automatic methods can't handle.
-   */
-  StatelessSession session();
+    /**
+     * A helper to access the database connection directly.
+     * Useful if we need to do something very specific that the automatic methods can't handle.
+     */
+    StatelessSession session();
 
-  // --- Finding Items ---
+    // --- Finding Items ---
 
-  /**
-   * Looks up a single book using its ISBN code.
-   *
-   * @param isbn The unique code to look for.
-   * @return An "Optional" box that contains the book if we found it, or is empty if we didn't.
-   */
-  @Find
-  Optional<Book> findBook(String isbn);
+    /**
+     * Looks up a single book using its ISBN code.
+     *
+     * @param isbn The unique code to look for.
+     * @return An "Optional" box that contains the book if we found it, or is empty if we didn't.
+     */
+    @Find
+    Optional<Book> findBook(String isbn);
 
-  /**
-   * Looks up an author using their ID.
-   */
-  @Find
-  Optional<Author> findAuthor(String ssn);
+    /**
+     * Looks up an author using their ID.
+     */
+    @Find
+    Optional<Author> findAuthor(String ssn);
 
-  /**
-   * Finds books that match a specific title.
-   * <p>
-   * Because there might be thousands of results, this method splits them into "pages".
-   * You ask for "Page 1" or "Page 5", and it gives you just that chunk.
-   * </p>
-   *
-   * @param title The exact title to look for.
-   * @param pageRequest Which page of results do you want?
-   * @return A page containing a list of books and total count info.
-   */
-  @Find
-  @OrderBy("title")
-  Page<Book> findBooksByTitle(String title, PageRequest pageRequest);
+    /**
+     * Finds books that match a specific title.
+     * <p>
+     * Because there might be thousands of results, this method splits them into "pages".
+     * You ask for "Page 1" or "Page 5", and it gives you just that chunk.
+     * </p>
+     *
+     * @param title       The exact title to look for.
+     * @param pageRequest Which page of results do you want?
+     * @return A page containing a list of books and total count info.
+     */
+    @Find
+    @OrderBy("title")
+    Page<Book> findBooksByTitle(String title, PageRequest pageRequest);
 
-  // --- Custom Searches ---
+    // --- Custom Searches ---
 
-  /**
-   * Search for books that have a specific word in the title.
-   * <p>
-   * Example: If you search for "%Harry%", it finds "Harry Potter" and "Dirty Harry".
-   * It also sorts the results alphabetically by title.
-   * </p>
-   */
-  @Query("where title like :pattern order by title")
-  List<Book> searchBooks(String pattern);
+    /**
+     * Search for books that have a specific word in the title.
+     * <p>
+     * Example: If you search for "%Harry%", it finds "Harry Potter" and "Dirty Harry".
+     * It also sorts the results alphabetically by title.
+     * </p>
+     */
+    @Query("where title like :pattern order by title")
+    List<Book> searchBooks(String pattern);
 
-  /**
-   * A custom report that just lists the titles of new books.
-   * Useful for creating quick lists without loading all the book details.
-   *
-   * @param minYear The oldest year we care about (e.g., 2023).
-   * @return Just the names of the books.
-   */
-  @Query("select title from Book where extract(year from publicationDate) >= :minYear")
-  List<String> findRecentBookTitles(int minYear);
+    /**
+     * A custom report that just lists the titles of new books.
+     * Useful for creating quick lists without loading all the book details.
+     *
+     * @param minYear The oldest year we care about (e.g., 2023).
+     * @return Just the names of the books.
+     */
+    @Query("select title from Book where extract(year from publicationDate) >= :minYear")
+    List<String> findRecentBookTitles(int minYear);
 
-  // --- Saving & Deleting ---
+    // --- Saving & Deleting ---
 
-  /**
-   * Registers a new book in the system.
-   */
-  @Insert
-  Book add(Book book);
+    /**
+     * Registers a new book in the system.
+     */
+    @Insert
+    Book add(Book book);
 
-  /**
-   * Saves changes made to an author's details.
-   */
-  @Update
-  void update(Author author);
+    /**
+     * Saves changes made to an author's details.
+     */
+    @Update
+    void update(Author author);
 
-  /**
-   * Permanently removes a book from the library.
-   */
-  @Delete
-  void remove(Book book);
+    /**
+     * Permanently removes a book from the library.
+     */
+    @Delete
+    void remove(Book book);
 }

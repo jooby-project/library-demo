@@ -3,11 +3,16 @@
 -- --------------------------------------------------------
 
 -- 1. Insert Publishers
-INSERT INTO Publisher (id, name) VALUES (1, 'Penguin Classics');
-INSERT INTO Publisher (id, name) VALUES (2, 'Bloomsbury Publishing');
-INSERT INTO Publisher (id, name) VALUES (3, 'Allen & Unwin');
-INSERT INTO Publisher (id, name) VALUES (4, 'Time USA, LLC');
-INSERT INTO Publisher (id, name) VALUES (5, 'Massachusetts Medical Society');
+INSERT INTO Publisher (id, name)
+VALUES (1, 'Penguin Classics');
+INSERT INTO Publisher (id, name)
+VALUES (2, 'Bloomsbury Publishing');
+INSERT INTO Publisher (id, name)
+VALUES (3, 'Allen & Unwin');
+INSERT INTO Publisher (id, name)
+VALUES (4, 'Time USA, LLC');
+INSERT INTO Publisher (id, name)
+VALUES (5, 'Massachusetts Medical Society');
 
 -- 2. Insert Authors
 -- Note: Address fields are embedded directly in the Author table
@@ -36,7 +41,8 @@ VALUES ('978-0441172719', 'Dune', '1965-08-01', 'In the week before their depart
 
 -- Novel (J.K. Rowling)
 INSERT INTO Book (isbn, title, publicationDate, text, type, publisher_id)
-VALUES ('978-0747532743', 'Harry Potter and the Philosopher\'s Stone', '1997-06-26', 'Mr. and Mrs. Dursley, of number four, Privet Drive...', 'NOVEL', 2);
+VALUES ('978-0747532743', 'Harry Potter and the Philosopher\'s Stone', '1997-06-26', 'Mr. and Mrs. Dursley, of number
+        four, Privet Drive...', 'NOVEL', 2);
 
 -- Novel (J.R.R. Tolkien)
 INSERT INTO Book (isbn, title, publicationDate, text, type, publisher_id)

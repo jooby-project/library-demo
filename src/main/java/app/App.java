@@ -5,7 +5,10 @@ import app.model.Address;
 import app.model.Author;
 import app.model.Book;
 import app.model.Publisher;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import io.jooby.Jooby;
+import io.jooby.OpenAPIModule;
 import io.jooby.flyway.FlywayModule;
 import io.jooby.guice.GuiceModule;
 import io.jooby.hibernate.HibernateModule;
@@ -13,7 +16,6 @@ import io.jooby.hibernate.TransactionalRequest;
 import io.jooby.hikari.HikariModule;
 import io.jooby.jackson.JacksonModule;
 import io.jooby.netty.NettyServer;
-import io.jooby.OpenAPIModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * An imaginary, but delightful Library API for interacting with library services and information.
  * Built with love by https://jooby.io.
- *</p>
+ * </p>
  *
  * @version 1.0.0
  * @license.name Apache 2.0
@@ -44,36 +46,40 @@ import org.slf4j.LoggerFactory;
  */
 public class App extends Jooby {
 
-  private static final Logger log = LoggerFactory.getLogger(App.class);
+    private static final Logger log = LoggerFactory.getLogger(App.class);
 
-  {
-    // Dependency Injection
-    install(new GuiceModule());
-    // JSON
-    install(new JacksonModule());
+    {
+        // Dependency Injection
+        install(new GuiceModule());
 
-    /* Documentation */
-    install(new OpenAPIModule());
-    // Publish generated files
-    assets("/docs/?*", "/app");
+        // JSON
+        ObjectMapper objectMapper = JacksonModule.create().
+                setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
 
-    /* Database */
-    install(new HikariModule());
-    install(new FlywayModule());
-    install(new HibernateModule(Book.class, Author.class, Publisher.class, Address.class));
+        install(new JacksonModule(objectMapper));
 
-    /* Middleware */
-    use(new TransactionalRequest().useStatelessSession());
+        /* Documentation */
+        install(new OpenAPIModule());
+        // Publish generated files
+        assets("/docs/?*", "/app");
 
-    /* Controller */
-    mvc(new LibraryApi_());
+        /* Database */
+        install(new HikariModule());
+        install(new FlywayModule());
+        install(new HibernateModule(Book.class, Author.class, Publisher.class, Address.class));
 
-    onStarted(() -> {
-      log.info("\n\nTry live docs at: \n  http://localhost:8080/docs\n  http://localhost:8080/docs/full.html\n  http://localhost:8080/docs/tryIt.html\n\n  http://localhost:8080/redoc\n  http://localhost:8080/swagger\n");
-    });
-  }
+        /* Middleware */
+        use(new TransactionalRequest().useStatelessSession());
 
-  public static void main(final String[] args) {
-    runApp(args, new NettyServer(), App::new);
-  }
+        /* Controller */
+        mvc(new LibraryApi_());
+
+        onStarted(() -> {
+            log.info("\n\nTry live docs at: \n  http://localhost:8080/docs\n  http://localhost:8080/docs/full.html\n  http://localhost:8080/docs/tryIt.html\n\n  http://localhost:8080/redoc\n  http://localhost:8080/swagger\n");
+        });
+    }
+
+    public static void main(final String[] args) {
+        runApp(args, new NettyServer(), App::new);
+    }
 }
