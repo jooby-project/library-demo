@@ -14,7 +14,7 @@ import io.jooby.guice.GuiceModule;
 import io.jooby.hibernate.HibernateModule;
 import io.jooby.hibernate.TransactionalRequest;
 import io.jooby.hikari.HikariModule;
-import io.jooby.jackson.JacksonModule;
+import io.jooby.jackson.Jackson2Module;
 import io.jooby.netty.NettyServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,10 +58,10 @@ public class App extends Jooby {
         install(new GuiceModule());
 
         // JSON
-        ObjectMapper objectMapper = JacksonModule.create().
+        ObjectMapper objectMapper = Jackson2Module.create().
                 setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
 
-        install(new JacksonModule(objectMapper));
+        install(new Jackson2Module(objectMapper));
 
         /* Documentation */
         install(new OpenAPIModule());
