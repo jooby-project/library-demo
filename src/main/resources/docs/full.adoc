@@ -16,13 +16,11 @@ All requests start with: `{{ server(0).url }}/library`.
 
 {{ statusCode({ 200: "Default/Success", 201: "Created", 404: "Not found", 400: "Invalid Request"}) | list }}
 
-{% for tag in tags %}
-== {{ tag.name }}
+{% for tag in tags %} == {{ tag.name }}
 
 {{ tag.description }}
 
-{% for route in tag.routes %}
-=== {{ loop.index + 1 }}. {{ route.summary }}
+{% for route in tag.routes %} === {{ loop.index + 1 }}. {{ route.summary }}
 
 {{ route.description }}
 
@@ -46,17 +44,18 @@ Returns a {{ route | response | link }} object.
 .Response
 {{ route | response | example | json }}
 
-{% if route.security is not empty %}
-.Required Permissions
+{% if route.security is not empty %} .Required Permissions
+
 [cols="1,3"]
 |===
 |Type | Scopes
 {% for scheme in route.security %}
-    {% for req in scheme %}
+{% for req in scheme %}
 | *{{ req.key }}* | {{ req.value | join(", ") }}
-    {% endfor %}
+{% endfor %}
 {% endfor %}
 |===
+
 {% endif -%}
 {% endfor -%}
 {% endfor %}
@@ -64,13 +63,18 @@ Returns a {{ route | response | link }} object.
 == 📖 Reference
 
 === Book Types
-When viewing book details, you will see a `type` field. Here is what those categories mean:
+
+When viewing book details, you will see a `type` field.
+Here is what those categories mean:
 
 {{schema("Book.type") | table }}
 
 === Schemas
+
 {% for schema in schemas %}
+
 [id="{{ schema.name }}"]
 ==== {{ schema.name }}
+
 {{ schema | table }}
 {% endfor %}

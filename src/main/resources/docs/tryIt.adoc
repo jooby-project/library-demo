@@ -33,29 +33,24 @@ All requests start with: `{{ server(0).url }}/library`
 *Endpoint:* `{{ route.method }} {{ route.path }}`
 
 {# 1. Path Parameters Section (filtered) #}
-{% if route | parameters("path") is not empty %}
-.Path Parameters
+{% if route | parameters("path") is not empty %} .Path Parameters
 {{ route | parameters("path") | table }}
 {% endif %}
 
 {# 2. Query Parameters Section (filtered) #}
-{% if route | parameters("query") is not empty %}
-.Query Parameters
+{% if route | parameters("query") is not empty %} .Query Parameters
 {{ route | parameters("query") | table }}
 {% endif %}
 
 {# 3. Request Body (only for POST/PUT) #}
-{% if route.body is not null %}
-.Request Body
+{% if route.body is not null %} .Request Body
 {{ route | request | body | example | json }}
 {% endif %}
 
-{# 4. Response Example #}
-.Response (200 OK)
+{# 4. Response Example #} .Response (200 OK)
 {{ route | response(200) | body | example | json }}
 
-{# 5. Usage Example (cURL) #}
-.Try it
+{# 5. Usage Example (cURL) #} .Try it
 {{ route | curl(language="bash") }}
 
 {% endfor %}

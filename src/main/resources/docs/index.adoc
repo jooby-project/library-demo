@@ -9,12 +9,12 @@
 
 All requests start with: `{{ server(0).url }}/library`
 
-
 == 🔍 Finding & Browsing Books
+
 {%- set quickSearch= GET("/library/search") -%}
-{%- set paginated  = GET("/library/books") -%}
-{%- set book  = GET("/library/books/{isbn}") -%}
-{%- set addBook  = POST("/library/books") %}
+{%- set paginated = GET("/library/books") -%}
+{%- set book = GET("/library/books/{isbn}") -%}
+{%- set addBook = POST("/library/books") %}
 
 === 1. {{ quickSearch.summary }}
 
@@ -67,7 +67,9 @@ All requests start with: `{{ server(0).url }}/library`
 {{ addBook | response(400) | json }}
 
 == 📖 Reference: Book Types
-When viewing book details, you will see a `type` field. Here is what those categories mean:
+
+When viewing book details, you will see a `type` field.
+Here is what those categories mean:
 
 {{schema("Book.type") | table }}
 
