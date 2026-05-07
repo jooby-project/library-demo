@@ -11,7 +11,7 @@ import io.jooby.guice.GuiceModule;
 import io.jooby.hibernate.HibernateModule;
 import io.jooby.hibernate.TransactionalRequest;
 import io.jooby.hikari.HikariModule;
-import io.jooby.jackson.JacksonModule;
+import io.jooby.jackson.Jackson2Module;
 import io.jooby.netty.NettyServer;
 import io.jooby.OpenAPIModule;
 import org.slf4j.Logger;
@@ -50,7 +50,7 @@ public class App extends Jooby {
     // Dependency Injection
     install(new GuiceModule());
     // JSON
-    install(new JacksonModule());
+    install(new Jackson2Module());
 
     /* Documentation */
     install(new OpenAPIModule());
