@@ -18,7 +18,7 @@
             ${project.basedir}${file.separator}src${file.separator}main${file.separator}resources${file.separator}docs${file.separator}
         </doc.dir>
 
-        <jooby.version>4.4.0</jooby.version>
+        <jooby.version>4.5.0</jooby.version>
         <jooby.compileExtensions>java,adoc</jooby.compileExtensions>
 
         <maven.compiler.source>25</maven.compiler.source>
@@ -55,7 +55,7 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-mysql</artifactId>
-            <version>12.3.0</version>
+            <version>12.5.0</version>
         </dependency>
         <dependency>
             <groupId>io.jooby</groupId>
@@ -69,7 +69,7 @@
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-            <version>9.6.0</version>
+            <version>9.7.0</version>
         </dependency>
         <!-- openapi outout -->
         <dependency>
@@ -113,7 +113,7 @@
                         <path>
                             <groupId>org.hibernate.orm</groupId>
                             <artifactId>hibernate-processor</artifactId>
-                            <version>7.3.1.Final</version>
+                            <version>7.3.3.Final</version>
                         </path>
                         <path>
                             <groupId>io.jooby</groupId>
